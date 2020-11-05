@@ -43,12 +43,31 @@ function handleNavClick(e) {
       });
 
       // Set sections as active
-
       section.classList.add("your-active-class");
+      const items = nav.querySelectorAll(".menu__link");
+      for (const el of items) {
+        el == li
+          ? (el.className = "menu__link menu__active__class")
+          : (el.className = "menu__link");
+      }
     } else {
       section.classList.remove("your-active-class");
     }
   }
+}
+
+function scrollFunction() {
+  document.body.scrollTop > 50 || document.documentElement.scrollTop > 20
+    ? (toTop.style.display = "block")
+    : (toTop.style.display = "none");
+}
+
+function topFunction() {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "smooth",
+  });
 }
 
 /**
@@ -71,11 +90,7 @@ function createNavBar() {
   nav.appendChild(fragment);
 }
 
-// build the nav
-
 nav.addEventListener("click", handleNavClick);
-
-// Scroll to anchor ID using scrollTO event
 
 /**
  * End Main Functions
@@ -84,3 +99,18 @@ nav.addEventListener("click", handleNavClick);
  */
 // Build menu
 createNavBar();
+
+
+
+//create the button
+const toTop = document.createElement("button");
+toTop.textContent = "Top";
+toTop.classList.add("top");
+document.body.appendChild(toTop);
+
+// When the user scrolls down 50px from the top of the document, show the button
+window.onscroll = scrollFunction();
+
+// When the user clicks on the button, scroll to the top of the document
+
+toTop.addEventListener("click", topFunction);
