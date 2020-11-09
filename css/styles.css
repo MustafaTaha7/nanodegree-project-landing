@@ -247,6 +247,14 @@ section.your-active-class .landing__container::after {
 .top:hover {
   background-color: #000;
 }
+.page__header {
+  transition: all 0.5s ease-in-out;
+
+}
+.hide-nav {
+  top: -70px;
+  transition: all 0.5s ease-in-out;
+}
 /* Section Active Styles Keyframe Animations */
 @keyframes rotate {
   from {

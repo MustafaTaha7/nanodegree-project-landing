@@ -20,6 +20,7 @@
 
 const nav = document.querySelector("#navbar__list");
 const sections = document.querySelectorAll("section[data-nav]");
+let timer = null;
 
 /**
  * End Global Variables
@@ -56,11 +57,7 @@ function handleNavClick(e) {
   }
 }
 
-function scrollFunction() {
-  document.body.scrollTop > 50 || document.documentElement.scrollTop > 20
-    ? (toTop.style.display = "block")
-    : (toTop.style.display = "none");
-}
+function scrollFunction() {}
 
 function topFunction() {
   window.scrollTo({
@@ -68,6 +65,25 @@ function topFunction() {
     left: 0,
     behavior: "smooth",
   });
+}
+
+function handleWindowScroll() {
+  // When the user scrolls down 50px from the top of the document, show the button
+
+  document.body.scrollTop > 50 || document.documentElement.scrollTop > 20
+    ? (toTop.style.display = "block")
+    : (toTop.style.display = "none");
+
+  //hide navbar when scroll
+
+  const header = document.querySelector(".page__header");
+  if (timer !== null) {
+    clearTimeout(timer);
+    header.classList.add("hide-nav");
+  }
+  timer = setTimeout(function () {
+    header.classList.remove("hide-nav");
+  }, 100);
 }
 
 /**
@@ -100,17 +116,16 @@ nav.addEventListener("click", handleNavClick);
 // Build menu
 createNavBar();
 
-
-
 //create the button
 const toTop = document.createElement("button");
 toTop.textContent = "Top";
 toTop.classList.add("top");
 document.body.appendChild(toTop);
 
-// When the user scrolls down 50px from the top of the document, show the button
-window.onscroll = scrollFunction();
-
 // When the user clicks on the button, scroll to the top of the document
 
 toTop.addEventListener("click", topFunction);
+
+// When the user scroll hide navbar
+
+window.addEventListener("scroll", handleWindowScroll, false);
