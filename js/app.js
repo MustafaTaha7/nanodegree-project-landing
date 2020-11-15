@@ -57,7 +57,7 @@ function handleNavClick(e) {
   }
 }
 
-function scrollFunction() {}
+
 
 function topFunction() {
   window.scrollTo({
@@ -67,6 +67,13 @@ function topFunction() {
   });
 }
 
+//handle if section in view port
+
+function isInViewport(el) {
+  const rect = el.getBoundingClientRect();
+  return rect.top >= 0 && rect.top <= 600 && rect.left >= 0;
+}
+
 function handleWindowScroll() {
   // When the user scrolls down 50px from the top of the document, show the button
 
@@ -74,16 +81,12 @@ function handleWindowScroll() {
     ? (toTop.style.display = "block")
     : (toTop.style.display = "none");
 
-  //hide navbar when scroll
-
-  const header = document.querySelector(".page__header");
-  if (timer !== null) {
-    clearTimeout(timer);
-    header.classList.add("hide-nav");
-  }
-  timer = setTimeout(function () {
-    header.classList.remove("hide-nav");
-  }, 100);
+    // add ative class to section in view port
+    for (let i = 0; i < sections.length; i++) {
+      isInViewport(sections[i])
+        ? sections[i].classList.add("your-active-class")
+        : sections[i].classList.remove("your-active-class");
+    }
 }
 
 /**
@@ -126,6 +129,6 @@ document.body.appendChild(toTop);
 
 toTop.addEventListener("click", topFunction);
 
-// When the user scroll hide navbar
+// When the user scroll 
 
 window.addEventListener("scroll", handleWindowScroll, false);
